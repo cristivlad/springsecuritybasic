@@ -13,3 +13,10 @@ create unique index ix_auth_username on authorities (username,authority);
 
 insert into users values ('cristi','112233','1');
 insert into authorities values ('cristi','admin');
+
+create table customer (
+    id int not null primary key,
+    email varchar(45),
+    pwd varchar(200),
+    role varchar(45)
+);
