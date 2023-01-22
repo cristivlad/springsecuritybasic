@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+/**
+ * Not needed since providing a custom AuthenticationProvider
+ */
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetailsService {
 
