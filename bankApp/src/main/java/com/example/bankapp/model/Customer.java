@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "customer")
 @Getter
@@ -17,7 +19,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
+    private String name;
     private String email;
+    private String mobileNumber;
     private String pwd;
     private String role;
+    private Instant createDate;
 }
