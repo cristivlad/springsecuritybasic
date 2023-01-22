@@ -6,13 +6,26 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+
+import static java.util.List.of;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .cors().configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(of("http://localhost:4200"));
+                    config.setAllowedMethods(of("*"));
+                    config.setAllowCredentials(true);
+                    config.setAllowedHeaders(of("*"));
+                    config.setMaxAge(3600L);
+                    return config;
+                }).and()
+                .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/myAccount","/myBalance","/myLoans","/myCards","/user").authenticated()
                 .requestMatchers("/contact","/notices", "/register").permitAll();
