@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.Instant;
-
 @Entity
 @Table(name = "customer")
 @Getter
@@ -24,5 +22,5 @@ public class Customer {
     private String mobileNumber;
     private String pwd;
     private String role;
-    private Instant createDate;
+    private String createDt;
 }
