@@ -1,7 +1,6 @@
 package com.example.bankapp.config;
 
 import com.example.bankapp.filter.CsrfCookieFilter;
-import org.apache.catalina.filters.CsrfPreventionFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,9 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
-import org.springframework.security.web.server.csrf.CsrfWebFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import static java.util.List.of;
