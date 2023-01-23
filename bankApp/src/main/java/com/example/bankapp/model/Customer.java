@@ -12,6 +12,7 @@ import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "customer")
@@ -21,7 +22,7 @@ import static jakarta.persistence.FetchType.EAGER;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
     private String name;
@@ -33,6 +34,6 @@ public class Customer {
     private String createDt;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer", fetch= EAGER)
+    @OneToMany(mappedBy = "customer", fetch = EAGER)
     private Set<Authority> authorities;
 }
