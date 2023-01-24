@@ -17,7 +17,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class RequestValidationBeforeFilter implements Filter {
 
     public static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
-    private Charset credentialsCharset = UTF_8;
+    private static final Charset credentialsCharset = UTF_8;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
