@@ -1,6 +1,7 @@
 package com.example.bankapp.config;
 
 import com.example.bankapp.filter.AuthoritiesLoggingAfterFilter;
+import com.example.bankapp.filter.AuthoritiesLoggingAtFilter;
 import com.example.bankapp.filter.CsrfCookieFilter;
 import com.example.bankapp.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                 .requestMatchers("/myAccount").hasRole("USER")
