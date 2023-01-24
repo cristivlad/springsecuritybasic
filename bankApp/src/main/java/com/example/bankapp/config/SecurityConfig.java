@@ -1,6 +1,7 @@
 package com.example.bankapp.config;
 
 import com.example.bankapp.filter.CsrfCookieFilter;
+import com.example.bankapp.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,13 +35,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact", "/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                 .requestMatchers("/myAccount").hasRole("USER")
                 .requestMatchers("/myBalance").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/myLoans").hasRole("USER")
                 .requestMatchers("/myCards").hasRole("USER")
-                .requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards", "/user").authenticated()
-                .requestMatchers("/contact", "/notices", "/register").permitAll();
+                .requestMatchers("/user").authenticated()
+                .requestMatchers("/contact", "/notices", "/register", "/login").permitAll();
         http.formLogin();
         http.httpBasic();
         return http.build();
