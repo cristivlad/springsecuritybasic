@@ -3,6 +3,7 @@ package com.example.bankapp.controller;
 import com.example.bankapp.model.Loan;
 import com.example.bankapp.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ public class LoansController {
 
     private final LoanRepository loanRepository;
 
+    @PostAuthorize("hasRole('ROOT')")
     @GetMapping("/myLoans")
     public List<Loan> getLoanDetails(@RequestParam int id) {
         var loans = loanRepository.findByCustomerIdOrderByStartDtDesc(id);
