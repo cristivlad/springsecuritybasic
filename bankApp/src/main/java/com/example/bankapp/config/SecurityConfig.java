@@ -7,6 +7,7 @@ import com.example.bankapp.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,7 +16,10 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.List;
+
 import static java.util.List.of;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 public class SecurityConfig {
@@ -24,13 +28,14 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
-        http
+        http.sessionManagement().sessionCreationPolicy(STATELESS).and()
                 .cors().configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(of("http://localhost:4200"));
                     config.setAllowedMethods(of("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(of("*"));
+                    config.setExposedHeaders(of("Authorization"));
                     config.setMaxAge(3600L);
                     return config;
                 }).and()
