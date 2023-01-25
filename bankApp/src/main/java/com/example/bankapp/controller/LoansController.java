@@ -1,6 +1,8 @@
 package com.example.bankapp.controller;
 
+import com.example.bankapp.model.Customer;
 import com.example.bankapp.model.Loan;
+import com.example.bankapp.repository.CustomerRepository;
 import com.example.bankapp.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -15,15 +17,15 @@ import java.util.List;
 public class LoansController {
 
     private final LoanRepository loanRepository;
+    private CustomerRepository customerRepository;
 
     @PostAuthorize("hasRole('ROOT')")
     @GetMapping("/myLoans")
-    public List<Loan> getLoanDetails(@RequestParam int id) {
-        var loans = loanRepository.findByCustomerIdOrderByStartDtDesc(id);
-        if (loans != null) {
-            return loans;
-        } else {
-            return null;
+    public List<Loan> getLoanDetails(@RequestParam String email) {
+        List<Customer> byEmail = customerRepository.findByEmail(email);
+        if (byEmail != null && !byEmail.isEmpty()) {
+            return loanRepository.findByCustomerIdOrderByStartDtDesc(byEmail.get(0).getId());
         }
+        return null;
     }
 }
